@@ -1,3 +1,4 @@
+import 'package:calculator_app/config/helpers/tools.dart';
 import 'package:calculator_app/presentation/providers/calc_provider.dart';
 import 'package:calculator_app/services/local_storage/local_keys.dart';
 import 'package:calculator_app/services/local_storage/local_storage.dart';
@@ -24,8 +25,9 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
   void initState() {
     super.initState();
     _focusNode = FocusNode();
-    _tasaEditController =
-        TextEditingController(text: ref.read(tasaGeneralProvider).toString());
+    final tasaGeneral = ref.read(tasaGeneralProvider);
+    final tasaGeneralTxt = Tools.eliminaDecimalCero(tasaGeneral);
+    _tasaEditController = TextEditingController(text: tasaGeneralTxt);
   }
 
   @override
@@ -65,6 +67,8 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
           return;
         }
         // si llega hasta aquí es que no es vacío ni 0
+
+        _tasaEditController.text = Tools.eliminaDecimalCero(tasaGeneral);
         _focusNode.unfocus();
 
         _updateTasaGeneral(tasaGeneral);
@@ -85,6 +89,7 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
         }
 
         // si llega hasta aquí es que no es vacío ni 0
+        _tasaEditController.text = Tools.eliminaDecimalCero(tasaGeneral);
         _updateTasaGeneral(tasaGeneral);
       },
       decoration: InputDecoration(
