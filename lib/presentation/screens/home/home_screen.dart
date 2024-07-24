@@ -56,12 +56,12 @@ class _Header extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(height: 10, width: 10, color: Colors.black),
+          Container(height: fontSize, width: 10, color: Colors.black),
           Text(
             'Calculator',
             style: TextStyle(color: Colors.white, fontSize: fontSize),
           ),
-          Container(height: 10, width: 10, color: Colors.black),
+          Container(height: fontSize, width: 10, color: Colors.black),
         ],
       ),
     );

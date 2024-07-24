@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
 const primaryGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [Colors.blue, Colors.red]);
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Colors.yellow, Colors.blue, Colors.red]);
