@@ -1,3 +1,6 @@
+import 'package:calculator_app/config/helpers/backgrounds.dart';
+import 'package:calculator_app/presentation/widgets/shared/landscape/landscape_view.dart';
+import 'package:calculator_app/presentation/widgets/shared/portrait/portrait_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,6 +23,18 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final orientation = MediaQuery.of(context).orientation;
+    // portrait es vertical
+    // lanscape es horizontal cuando se gira el celular
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(gradient: primaryGradient),
+        ),
+        (orientation == Orientation.portrait)
+            ? const PortraitView()
+            : const LandscapeView(),
+      ],
+    );
   }
 }
