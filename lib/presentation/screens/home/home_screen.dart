@@ -11,9 +11,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Calculator')),
-      body: const HomeView(),
+    return const Scaffold(
+      // appBar: AppBar(
+      //   title: const Text('Calculator'),
+      // ),
+      body: HomeView(),
     );
   }
 }
@@ -27,14 +29,41 @@ class HomeView extends StatelessWidget {
     // portrait es vertical
     // lanscape es horizontal cuando se gira el celular
     return Stack(
+      // alignment: Alignment.topCenter,
       children: [
         Container(
           decoration: const BoxDecoration(gradient: primaryGradient),
         ),
+        const _Header(),
         (orientation == Orientation.portrait)
             ? const PortraitView()
             : const LandscapeView(),
       ],
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header();
+
+  @override
+  Widget build(BuildContext context) {
+    final paddingTop = MediaQuery.of(context).padding.top;
+    final fontSize = Theme.of(context).textTheme.titleLarge?.fontSize;
+
+    return Padding(
+      padding: EdgeInsets.only(top: paddingTop + 5, left: 10, right: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(height: 10, width: 10, color: Colors.black),
+          Text(
+            'Calculator',
+            style: TextStyle(color: Colors.white, fontSize: fontSize),
+          ),
+          Container(height: 10, width: 10, color: Colors.black),
+        ],
+      ),
     );
   }
 }
