@@ -123,13 +123,15 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
   }
 
   void refresh() {
+    if (!mounted) return; // claro aquí no tengo contemplado que esto pase, pero
+    // lo coloco para acordarme que así me garantizo que se refresque solo cuando esté montado el estado del widget
+
     setState(() {});
   }
 
   void _showError(String errorMsg) {
-    setState(() {
-      _errorMsg = errorMsg;
-      _isError = true;
-    });
+    _errorMsg = errorMsg;
+    _isError = true;
+    refresh();
   }
 }

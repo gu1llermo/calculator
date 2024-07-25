@@ -57,9 +57,9 @@ class _Header extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(height: fontSize, width: 10, color: Colors.black),
-          Text(
-            'Calculator',
-            style: TextStyle(color: Colors.white, fontSize: fontSize),
+          const Text(
+            'Calculadora',
+            style: TextStyle(fontSize: 24),
           ),
           Container(height: fontSize, width: 10, color: Colors.black),
         ],
