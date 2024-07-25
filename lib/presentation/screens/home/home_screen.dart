@@ -12,9 +12,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Calculator'),
-      // ),
       body: HomeView(),
     );
   }
@@ -25,44 +22,51 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
     // portrait es vertical
     // lanscape es horizontal cuando se gira el celular
-    return Stack(
-      // alignment: Alignment.topCenter,
-      children: [
-        Container(
-          decoration: const BoxDecoration(gradient: primaryGradient),
-        ),
-        const _Header(),
-        (orientation == Orientation.portrait)
-            ? const PortraitView()
-            : const LandscapeView(),
-      ],
+    final mediaQuery = MediaQuery.of(context);
+    // final orientation = mediaQuery.orientation;
+    final height = mediaQuery.size.height;
+    final width = mediaQuery.size.width;
+    bool isPortrait = width < 600;
+    // bool isPortrait = orientation == Orientation.portrait;
+
+    return SingleChildScrollView(
+      child: Stack(
+        // alignment: Alignment.topCenter,
+        children: [
+          const _GradientBackground(),
+          SizedBox(
+            height: height,
+            width: width,
+            child: Column(
+              children: [
+                AppBar(
+                  centerTitle: true,
+                  backgroundColor: Colors.transparent,
+                  title: const Text('Calculator'),
+                ),
+                Expanded(
+                    child: isPortrait
+                        ? const PortraitView()
+                        : const LandscapeView()),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header();
+class _GradientBackground extends StatelessWidget {
+  const _GradientBackground();
 
   @override
   Widget build(BuildContext context) {
-    final paddingTop = MediaQuery.of(context).padding.top;
-    final fontSize = Theme.of(context).textTheme.titleLarge?.fontSize;
-
-    return Padding(
-      padding: EdgeInsets.only(top: paddingTop + 5, left: 10, right: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(height: fontSize, width: 10, color: Colors.black),
-          const Text(
-            'Calculadora',
-            style: TextStyle(fontSize: 24),
-          ),
-          Container(height: fontSize, width: 10, color: Colors.black),
-        ],
+    return Positioned.fill(
+      child: Container(
+        decoration: const BoxDecoration(gradient: primaryGradient),
       ),
     );
   }

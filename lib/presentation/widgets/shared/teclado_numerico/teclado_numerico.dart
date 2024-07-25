@@ -4,55 +4,42 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math';
 
 class TecladoNumerico extends ConsumerStatefulWidget {
-  const TecladoNumerico({super.key, required this.height, required this.width});
-  final double height;
-  final double width;
+  const TecladoNumerico({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _CustomKeyboardState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _TecladoNumericoState();
 }
 
-class _CustomKeyboardState extends ConsumerState<TecladoNumerico> {
+class _TecladoNumericoState extends ConsumerState<TecladoNumerico> {
   @override
   Widget build(BuildContext context) {
-    // const double filas = 5;
-    // const double columnas = 4;
-    // final double anchoBoton = widget.width / columnas;
-    // final double alturaBoton = widget.height / filas;
-    // final double menor = min(alturaBoton, anchoBoton) - 2;
-
-    return Container(
-      height: widget.height,
-      width: widget.width,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Boton(), Boton(), Boton(), Boton()]),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Boton(), Boton(), Boton(), Boton()]),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Boton(), Boton(), Boton(), Boton()]),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Boton(), Boton(), Boton(), Boton()]),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Boton(), Boton(), Boton(), Boton()]),
-        ],
-      ),
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [Boton(), Boton(), Boton(), Boton()]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [Boton(), Boton(), Boton(), Boton()]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [Boton(), Boton(), Boton(), Boton()]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [Boton(), Boton(), Boton(), Boton()]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [Boton(), Boton(), Boton(), Boton()]),
+      ],
     );
   }
 }
 
 class Boton extends StatelessWidget {
-  const Boton({super.key});
-  // final double ancho;
-  // final double alto;
+  const Boton({super.key, this.child = const _DefaultBotonWidget()});
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +52,20 @@ class Boton extends StatelessWidget {
             animationDuration: const Duration(seconds: 1),
             elevation: 4,
             fixedSize: const Size.fromRadius(30)),
-        child: const Text(
-          '1',
-          style: TextStyle(fontSize: 25, color: Colors.white),
-        ));
+        child: child);
+  }
+}
+
+class _DefaultBotonWidget extends StatelessWidget {
+  const _DefaultBotonWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      '1',
+      style: TextStyle(fontSize: 25, color: Colors.white),
+    );
   }
 }

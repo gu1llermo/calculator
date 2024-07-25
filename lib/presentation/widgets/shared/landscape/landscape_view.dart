@@ -7,13 +7,6 @@ class LandscapeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final paddingTop = MediaQuery.of(context).padding.top;
-    final fontSize = Theme.of(context).textTheme.titleLarge?.fontSize ?? 25;
-
-    return Positioned(
-      top: 2 * paddingTop + fontSize,
-      left: 10,
-      child: const TasaButton(),
-    );
+    return const Center(child: TasaButton());
   }
 }
