@@ -1,7 +1,6 @@
 import 'package:calculator_app/presentation/widgets/shared/teclado_numerico/botones_shapes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:math';
 
 class TecladoNumerico extends ConsumerStatefulWidget {
   const TecladoNumerico({super.key});

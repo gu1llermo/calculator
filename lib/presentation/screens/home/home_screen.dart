@@ -25,6 +25,7 @@ class HomeView extends StatelessWidget {
     // portrait es vertical
     // lanscape es horizontal cuando se gira el celular
     final mediaQuery = MediaQuery.of(context);
+
     // final orientation = mediaQuery.orientation;
     final height = mediaQuery.size.height;
     final width = mediaQuery.size.width;

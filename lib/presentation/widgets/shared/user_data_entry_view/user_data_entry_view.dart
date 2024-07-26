@@ -1,4 +1,5 @@
-import 'package:calculator_app/presentation/widgets/shared/data_widget/data_widget.dart';
+import 'package:calculator_app/presentation/widgets/shared/data_widget_view/data_widget.dart';
+import 'package:calculator_app/presentation/widgets/shared/data_widget_view/data_widget_view.dart';
 import 'package:calculator_app/presentation/widgets/shared/pantalla_visualizacion/pantalla_visualizacion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,13 +15,15 @@ class UserDataEntryView extends ConsumerStatefulWidget {
 class _UserDataEntryViewState extends ConsumerState<UserDataEntryView> {
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(color: Colors.white);
+    String data1Txt = 'Data 1';
+    String data2Txt = 'Data 2';
+    String symbol = '\$';
 
-    return const PantallaVisualizacion(
-      child: DataWidget(
-        alignment: Alignment.centerRight,
-        data1: Text('Dato 1', style: textStyle),
-        data2: Text('Dato 2', style: textStyle),
+    return PantallaVisualizacion(
+      child: DataWidgetView(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        data1: DataWidget(txt: '$data1Txt $symbol'),
+        data2: DataWidget(txt: '$data2Txt $symbol'),
       ),
     );
   }
