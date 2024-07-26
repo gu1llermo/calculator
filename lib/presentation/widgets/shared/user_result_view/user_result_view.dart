@@ -14,8 +14,8 @@ class UserResultView extends ConsumerStatefulWidget {
 class _UserResultViewState extends ConsumerState<UserResultView> {
   @override
   Widget build(BuildContext context) {
-    String data1Txt = 'Data 3';
-    String data2Txt = 'Data 4';
+    String data1Txt = 'Parte Entera Dollar';
+    String data2Txt = 'Restante en Moneda Local';
     String data1Symbol = '\$';
     String data2Symbol = 'Bs';
 

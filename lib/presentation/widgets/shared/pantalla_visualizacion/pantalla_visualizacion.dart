@@ -8,12 +8,14 @@ class PantallaVisualizacion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 3),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: Colors.black12, borderRadius: BorderRadius.circular(20)),
-        child: child,
+      child: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.black12, borderRadius: BorderRadius.circular(20)),
+          child: child,
+        ),
       ),
     );
   }

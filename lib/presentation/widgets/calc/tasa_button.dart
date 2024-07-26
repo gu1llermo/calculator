@@ -39,9 +39,11 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
 
   @override
   Widget build(BuildContext context) {
-    final fontSizeLabel = Theme.of(context).textTheme.titleMedium?.fontSize;
-    final labelTextStyle =
-        TextStyle(color: Colors.white, fontSize: fontSizeLabel);
+    final fontSizeLabel = Theme.of(context).textTheme.bodyLarge?.fontSize;
+    final labelTextStyle = TextStyle(
+        color: Colors.white,
+        fontSize: fontSizeLabel,
+        fontWeight: FontWeight.bold);
 
     return TextField(
       style: labelTextStyle,

@@ -15,15 +15,16 @@ class UserDataEntryView extends ConsumerStatefulWidget {
 class _UserDataEntryViewState extends ConsumerState<UserDataEntryView> {
   @override
   Widget build(BuildContext context) {
-    String data1Txt = 'Data 1';
-    String data2Txt = 'Data 2';
-    String symbol = '\$';
+    String data1Txt = 'User Data Entry';
+    String data2Txt = 'User Data Preview Result';
+    String data1Symbol = '\$';
+    String data2Symbol = '\$';
 
     return PantallaVisualizacion(
       child: DataWidgetView(
         crossAxisAlignment: CrossAxisAlignment.end,
-        data1: DataWidget(txt: '$data1Txt $symbol'),
-        data2: DataWidget(txt: '$data2Txt $symbol'),
+        data1: DataWidget(txt: '$data1Txt $data1Symbol'),
+        data2: DataWidget(txt: '$data2Txt $data2Symbol'),
       ),
     );
   }

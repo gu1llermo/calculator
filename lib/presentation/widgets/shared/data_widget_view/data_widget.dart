@@ -9,10 +9,10 @@ class DataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double fontSize =
-        Theme.of(context).textTheme.displaySmall?.fontSize ?? 30;
-
-    final textStyle = TextStyle(color: Colors.white, fontSize: fontSize);
+    const textStyle = TextStyle(
+      color: Colors.white,
+      fontSize: 38,
+    );
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
