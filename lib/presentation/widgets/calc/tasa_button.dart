@@ -44,6 +44,7 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
         color: Colors.white,
         fontSize: fontSizeLabel,
         fontWeight: FontWeight.bold);
+    final symbolMonedaLocal = ref.watch(symbolMonedaLocalProvider);
 
     return TextField(
       style: labelTextStyle,
@@ -99,10 +100,10 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
         error: _isError
             ? Text(_errorMsg, style: const TextStyle(color: Colors.red))
             : null,
-        labelText: 'Tasa',
+        labelText: 'Tasa, 1$monedaBase equivale a:',
         labelStyle: labelTextStyle,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffix: const Text('Bs'),
+        suffix: Text(symbolMonedaLocal),
         suffixStyle: labelTextStyle,
         filled: true,
         fillColor: Colors.black26,
