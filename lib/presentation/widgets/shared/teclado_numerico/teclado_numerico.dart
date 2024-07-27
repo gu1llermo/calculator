@@ -47,8 +47,8 @@ const _botonesTitle = <Widget>[
   //
   // 5ta Fila
 
-  Boton(onPressed: manejadorDeNumeros, title: '00'),
-  Boton(onPressed: manejadorDeNumeros, title: '0'),
+  Boton(onPressed: manejadorDeCeros, title: '00'),
+  Boton(onPressed: manejadorDeCeros, title: '0'),
   Boton(onPressed: manejadorPuntoDecimal, title: '.'),
   Boton(
     onPressed: manejadorDeNumeros,
@@ -96,7 +96,29 @@ void manejadorDeNumeros(String? title, WidgetRef ref) {
 
   final userDataEntry = ref.read(userDataEntryProvider.notifier).update(
     (state) {
-      final newState = '$state$title';
+      if (state.isEmpty) {
+        if ((title == '/') || (title == '*') || (title == '+')) {
+          return ''; //
+        }
+      }
+      // dame el último caracter
+      String lastChar = '';
+      if (state.isNotEmpty) {
+        lastChar = state.substring(state.length - 1, state.length);
+      }
+      String newState;
+      if (contieneOperadorMatematico(lastChar) &&
+          contieneOperadorMatematico(title)) {
+        // sí el último carcater es un operador matemático
+        // y quieres colocar otro operador matemático en su lugar
+        // entonces lo reemplazamos
+
+        newState =
+            '${state.replaceRange(state.length - 1, state.length, title)}';
+      } else {
+        newState = '$state$title';
+      }
+
       LocalStorage.prefs.setString(LocalKeys.userDataEntry, newState);
       return newState;
     },
@@ -104,7 +126,47 @@ void manejadorDeNumeros(String? title, WidgetRef ref) {
 
   if (!contieneOperadorMatematico(userDataEntry)) return; // no hagas nada
   // si llega aquí es porque tiene un operador matematico
-  final result = calculate(userDataEntry);
+  final result = Tools.calculate(userDataEntry);
+
+  if (result.contains('Error')) return; // no actualices nada
+
+  // ahora actualiza a userEntryResultPreview
+  // no puede dar infinito aquí
+
+  // entonces aquí actualiza a userEntryResultPreview
+  ref.read(userDataPreviewResultProvider.notifier).update(
+    (state) {
+      LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, result);
+      return result;
+      // return Tools.eliminaDecimalCeroFromTxt(result);
+    },
+  );
+}
+
+void manejadorDeCeros(String? title, WidgetRef ref) {
+  // maneja los números 0 y 00
+  if (title == null) return; // solo por seguridad que no haga nada
+  // porque simepre tiene que tener un symbol
+
+  final userDataEntry = ref.read(userDataEntryProvider.notifier).update(
+    (state) {
+      // aquí llega el 0 y 00
+
+      String newState = '0';
+      if (state != newState) {
+        if (state.isNotEmpty) {
+          newState = '$state$title';
+        }
+      }
+
+      LocalStorage.prefs.setString(LocalKeys.userDataEntry, newState);
+      return newState;
+    },
+  );
+
+  if (!contieneOperadorMatematico(userDataEntry)) return; // no hagas nada
+  // si llega aquí es porque tiene un operador matematico
+  final result = Tools.calculate(userDataEntry);
 
   if (result.contains('Error')) return; // no actualices nada
 
@@ -130,30 +192,30 @@ bool contieneOperadorMatematico(String userDataEntry) {
   return false;
 }
 
-String calculate(String userInput) {
-  // Infinity : cuando se divide por 0
-  // RangeError cuando no está completamente bien armada la expresión
-  // por ejemplo escriben 5+ y quieren un resultado
-  // ó escriben 5+*-+*/ cosas así
+// String calculate(String userInput) {
+//   // Infinity : cuando se divide por 0
+//   // RangeError cuando no está completamente bien armada la expresión
+//   // por ejemplo escriben 5+ y quieren un resultado
+//   // ó escriben 5+*-+*/ cosas así
 
-  // FormatException no debería aparecer, pero aparece cuando permites
-  // armar mal una expresión
+//   // FormatException no debería aparecer, pero aparece cuando permites
+//   // armar mal una expresión
 
-  try {
-    final expression = Parser().parse(userInput);
-    final evaluation = expression.evaluate(EvaluationType.REAL, ContextModel());
-    print('evaluation= $evaluation');
-    return evaluation.toString();
-  } on RangeError {
-    return 'RangeError';
-  } catch (e) {
-    // print('e -> $e');
-    // e -> RangeError (index): Invalid value: Valid value range is empty: -1
-    // es por faltan argumentos, por ejemplo 1+ y le damos enter
-    return e
-        .toString(); // no debería llegar aquí nunca, porque tengo que controlar bien las entradas
-  }
-}
+//   try {
+//     final expression = Parser().parse(userInput);
+//     final evaluation = expression.evaluate(EvaluationType.REAL, ContextModel());
+//     print('evaluation= $evaluation');
+//     return evaluation.toString();
+//   } on RangeError {
+//     return 'RangeError';
+//   } catch (e) {
+//     // print('e -> $e');
+//     // e -> RangeError (index): Invalid value: Valid value range is empty: -1
+//     // es por faltan argumentos, por ejemplo 1+ y le damos enter
+//     return e
+//         .toString(); // no debería llegar aquí nunca, porque tengo que controlar bien las entradas
+//   }
+// }
 
 void clearButton(String? title, WidgetRef ref) {
   // debe borrar userDataEntry
@@ -174,10 +236,10 @@ void clearButton(String? title, WidgetRef ref) {
 }
 
 void removeLastChar(String? title, WidgetRef ref) {
-  ref.read(userDataEntryProvider.notifier).update(
+  String userDataEntry = ref.read(userDataEntryProvider.notifier).update(
     (state) {
       String newState = '';
-      if (!state.isEmpty) {
+      if (state.isNotEmpty) {
         newState = state.substring(0, state.length - 1);
       }
       LocalStorage.prefs.setString(LocalKeys.userDataEntry, newState);
@@ -185,12 +247,20 @@ void removeLastChar(String? title, WidgetRef ref) {
     },
   );
 
-  // ref.read(userDataPreviewResultProvider.notifier).update(
-  //   (state) {
-  //     LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, '');
-  //     return '';
-  //   },
-  // );
+  final result = Tools.calculate(userDataEntry);
+
+  ref.read(userDataPreviewResultProvider.notifier).update(
+    (state) {
+      String newState = '';
+      if (!result.contains('Error') &&
+          contieneOperadorMatematico(userDataEntry)) {
+        newState = result;
+      }
+
+      LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, newState);
+      return newState;
+    },
+  );
 }
 
 void manejadorPuntoDecimal(String? title, WidgetRef ref) {

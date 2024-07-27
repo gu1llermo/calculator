@@ -1,3 +1,4 @@
+import 'package:calculator_app/config/helpers/tools.dart';
 import 'package:calculator_app/presentation/providers/calc_provider.dart';
 import 'package:calculator_app/presentation/widgets/shared/data_widget_view/data_widget.dart';
 import 'package:calculator_app/presentation/widgets/shared/data_widget_view/data_widget_view.dart';
@@ -44,12 +45,26 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
   Widget build(BuildContext context) {
     // éstso valores dependen de cuál moneda tiene el ususario de entrada
     final userDataEntry = ref.watch(userDataEntryProvider);
+    final userDataEntrySymbol = ref.watch(userDataEntrySymbolProvider);
+
+    final symbolMonedaLocal =
+        ref.watch(symbolMonedaLocalProvider); // aquí la moneda local
+    // es fija, pero igual lo hago así para que sea flexible el código a futuro
+
+    String result =
+        userDataEntry.isNotEmpty ? Tools.calculate(userDataEntry) : '';
+    // Infinity : cuando se divide por 0
+    // RangeError cuando no está completamente bien armada la expresión
+    // por ejemplo escriben 5+ y quieren un resultado
+    // ó escriben 5+*-+*/ cosas así
+
+    // FormatException no debería aparecer, pero aparece cuando permites
+    // armar mal una expresión
 
     String data1Txt = 'Parte Entera Dollar';
     String data2Txt = 'Restante en Moneda Local';
     // aquí siempre es la moneda base, en éstos casos es el dólar
     // y lo estoy dejando fijo para simplificar
-    final symbolMonedaLocal = ref.watch(symbolMonedaLocalProvider);
 
     autoScroll();
 

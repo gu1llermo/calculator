@@ -52,9 +52,12 @@ class _UserDataEntryViewState extends ConsumerState<UserDataEntryView> {
   Widget build(BuildContext context) {
     final userDataEntry = ref.watch(userDataEntryProvider);
     final userDataPreviewResult = ref.watch(userDataPreviewResultProvider);
+
+    String userDataPreviewResultAux =
+        Tools.redondeaDecimalesFromTxt(userDataPreviewResult, 2);
     // me gustaría formatear en caso que haya decimales que sean 0
-    final userDataPreviewResultAux =
-        Tools.eliminaDecimalCeroFromTxt(userDataPreviewResult);
+    userDataPreviewResultAux =
+        Tools.eliminaDecimalCeroFromTxt(userDataPreviewResultAux);
 
     final userDataEntrySymbol = ref.watch(userDataEntrySymbolProvider);
 
