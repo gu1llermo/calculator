@@ -12,4 +12,20 @@ class Tools {
 
     return nroTxt;
   }
+
+  static String eliminaDecimalCeroFromTxt(String nroTxt) {
+    try {
+      final nroDouble = double.parse(nroTxt);
+      final fractionalPart = nroDouble % 1;
+
+      if (fractionalPart == 0) {
+        final index = nroTxt.indexOf('.');
+        return nroTxt.substring(0, index);
+      }
+    } catch (e) {
+      // si ocurrer un error simplemente regresa su valor tal cual
+    }
+
+    return nroTxt;
+  }
 }

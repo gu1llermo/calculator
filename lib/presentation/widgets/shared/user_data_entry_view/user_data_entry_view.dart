@@ -1,3 +1,4 @@
+import 'package:calculator_app/config/helpers/tools.dart';
 import 'package:calculator_app/presentation/providers/calc_provider.dart';
 import 'package:calculator_app/presentation/widgets/shared/data_widget_view/data_widget.dart';
 import 'package:calculator_app/presentation/widgets/shared/data_widget_view/data_widget_view.dart';
@@ -14,23 +15,74 @@ class UserDataEntryView extends ConsumerStatefulWidget {
 }
 
 class _UserDataEntryViewState extends ConsumerState<UserDataEntryView> {
+  late ScrollController _userDataEntryScrollController;
+  late ScrollController _userDataPreviewResultScrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _userDataEntryScrollController = ScrollController();
+    _userDataPreviewResultScrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _userDataEntryScrollController.dispose();
+    _userDataPreviewResultScrollController.dispose();
+    super.dispose();
+  }
+
+  void autoScroll() async {
+    if (!_userDataEntryScrollController.hasClients) return;
+
+    await Future.delayed(const Duration(milliseconds: 400));
+
+    final userDataEntryMaxScrollExtent =
+        _userDataEntryScrollController.position.maxScrollExtent;
+    _userDataEntryScrollController.position
+        .moveTo(userDataEntryMaxScrollExtent);
+
+    final userDataPreviewResultMaxScrollExtent =
+        _userDataPreviewResultScrollController.position.maxScrollExtent;
+    _userDataPreviewResultScrollController.position
+        .moveTo(userDataPreviewResultMaxScrollExtent);
+  }
+
   @override
   Widget build(BuildContext context) {
-    String data1Txt = 'userDataEntry';
-    String data2Txt = 'userDataPreviewResult';
+    final userDataEntry = ref.watch(userDataEntryProvider);
+    final userDataPreviewResult = ref.watch(userDataPreviewResultProvider);
+    // me gustaría formatear en caso que haya decimales que sean 0
+    final userDataPreviewResultAux =
+        Tools.eliminaDecimalCeroFromTxt(userDataPreviewResult);
+
     final userDataEntrySymbol = ref.watch(userDataEntrySymbolProvider);
+
+    final symbol1 = userDataEntry.isEmpty ? '' : userDataEntrySymbol;
+    final symbol2 = userDataPreviewResult.isEmpty
+        ? ''
+        : userDataPreviewResult.contains('Error') ||
+                userDataPreviewResult.contains('Infinity')
+            ? ''
+            : userDataEntrySymbol;
     // éste valor puede ser dolares ó la moneda local
     // depende de cuál sea, se hacen unos cálculos
     // en la otra página ó vista
-
-    // String data1Symbol = '\$';
-    // String data2Symbol = '\$';
+    autoScroll();
 
     return PantallaVisualizacion(
       child: DataWidgetView(
         crossAxisAlignment: CrossAxisAlignment.end,
-        data1: DataWidget(txt: '$data1Txt $userDataEntrySymbol'),
-        data2: DataWidget(txt: '$data2Txt $userDataEntrySymbol'),
+        data1: DataWidget(
+          txt: '$userDataEntry $symbol1',
+          scrollController: _userDataEntryScrollController,
+        ),
+        data2: DataWidget(
+          txt: '$userDataPreviewResultAux $symbol2',
+          scrollController: _userDataPreviewResultScrollController,
+          color: Colors.white.withOpacity(.7),
+          fontSize: 35,
+        ),
       ),
     );
   }

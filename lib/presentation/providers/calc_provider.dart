@@ -16,3 +16,9 @@ final symbolMonedaLocalProvider = StateProvider<String>(
 
 final userDataEntrySymbolProvider = StateProvider<String>((ref) =>
     LocalStorage.prefs.getString(LocalKeys.userDataEntrySymbol) ?? '\$');
+
+final userDataEntryProvider = StateProvider<String>(
+    (ref) => LocalStorage.prefs.getString(LocalKeys.userDataEntry) ?? '');
+
+final userDataPreviewResultProvider = StateProvider<String>((ref) =>
+    LocalStorage.prefs.getString(LocalKeys.userDataPreviewResult) ?? '');

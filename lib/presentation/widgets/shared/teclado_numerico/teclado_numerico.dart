@@ -1,3 +1,4 @@
+import 'package:calculator_app/config/helpers/tools.dart';
 import 'package:calculator_app/presentation/providers/calc_provider.dart';
 import 'package:calculator_app/presentation/widgets/shared/teclado_numerico/boton.dart';
 import 'package:calculator_app/presentation/widgets/shared/teclado_numerico/botones_shapes.dart';
@@ -5,13 +6,20 @@ import 'package:calculator_app/services/local_storage/local_keys.dart';
 import 'package:calculator_app/services/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 const _botonesTitle = <Widget>[
   // 1era Fila
-  Boton(onPressed: manejadorDeNumeros, title: 'C'),
-  Boton(onPressed: manejadorDeNumeros, title: '%'),
+  Boton(onPressed: clearButton, title: 'C'),
   Boton(
-    onPressed: manejadorDeNumeros,
+    onPressed: manejadorIndiceShape,
+    icon: Icon(
+      Icons.shape_line,
+      color: Colors.yellow,
+    ),
+  ),
+  Boton(
+    onPressed: removeLastChar,
     icon: Icon(
       Icons.backspace_outlined,
       color: Colors.white,
@@ -38,15 +46,10 @@ const _botonesTitle = <Widget>[
   Boton(onPressed: manejadorDeNumeros, title: '+'),
   //
   // 5ta Fila
-  Boton(
-    onPressed: manejadorIndiceShape,
-    icon: Icon(
-      Icons.shape_line,
-      color: Colors.yellow,
-    ),
-  ),
+
+  Boton(onPressed: manejadorDeNumeros, title: '00'),
   Boton(onPressed: manejadorDeNumeros, title: '0'),
-  Boton(onPressed: manejadorDeNumeros, title: '.'),
+  Boton(onPressed: manejadorPuntoDecimal, title: '.'),
   Boton(
     onPressed: manejadorDeNumeros,
     title: '=',
@@ -87,12 +90,130 @@ class _TecladoNumericoState extends ConsumerState<TecladoNumerico> {
 }
 
 void manejadorDeNumeros(String? title, WidgetRef ref) {
-  print(title ?? 'No hay title');
+  // maneja los números del 1 al 9
+  if (title == null) return; // solo por seguridad que no haga nada
+  // porque simepre tiene que tener un symbol
+
+  final userDataEntry = ref.read(userDataEntryProvider.notifier).update(
+    (state) {
+      final newState = '$state$title';
+      LocalStorage.prefs.setString(LocalKeys.userDataEntry, newState);
+      return newState;
+    },
+  );
+
+  if (!contieneOperadorMatematico(userDataEntry)) return; // no hagas nada
+  // si llega aquí es porque tiene un operador matematico
+  final result = calculate(userDataEntry);
+
+  if (result.contains('Error')) return; // no actualices nada
+
+  // ahora actualiza a userEntryResultPreview
+  // no puede dar infinito aquí
+
+  // entonces aquí actualiza a userEntryResultPreview
+  ref.read(userDataPreviewResultProvider.notifier).update(
+    (state) {
+      LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, result);
+      return result;
+      // return Tools.eliminaDecimalCeroFromTxt(result);
+    },
+  );
+}
+
+bool contieneOperadorMatematico(String userDataEntry) {
+  if (userDataEntry.contains('/')) return true;
+  if (userDataEntry.contains('+')) return true;
+  if (userDataEntry.contains('-')) return true;
+  if (userDataEntry.contains('*')) return true;
+
+  return false;
+}
+
+String calculate(String userInput) {
+  // Infinity : cuando se divide por 0
+  // RangeError cuando no está completamente bien armada la expresión
+  // por ejemplo escriben 5+ y quieren un resultado
+  // ó escriben 5+*-+*/ cosas así
+
+  // FormatException no debería aparecer, pero aparece cuando permites
+  // armar mal una expresión
+
+  try {
+    final expression = Parser().parse(userInput);
+    final evaluation = expression.evaluate(EvaluationType.REAL, ContextModel());
+    print('evaluation= $evaluation');
+    return evaluation.toString();
+  } on RangeError {
+    return 'RangeError';
+  } catch (e) {
+    // print('e -> $e');
+    // e -> RangeError (index): Invalid value: Valid value range is empty: -1
+    // es por faltan argumentos, por ejemplo 1+ y le damos enter
+    return e
+        .toString(); // no debería llegar aquí nunca, porque tengo que controlar bien las entradas
+  }
 }
 
 void clearButton(String? title, WidgetRef ref) {
   // debe borrar userDataEntry
   // y UserDataPreviewResult
+  // y los dos de ab
+  ref.read(userDataEntryProvider.notifier).update(
+    (state) {
+      LocalStorage.prefs.setString(LocalKeys.userDataEntry, '');
+      return '';
+    },
+  );
+  ref.read(userDataPreviewResultProvider.notifier).update(
+    (state) {
+      LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, '');
+      return '';
+    },
+  );
+}
+
+void removeLastChar(String? title, WidgetRef ref) {
+  ref.read(userDataEntryProvider.notifier).update(
+    (state) {
+      String newState = '';
+      if (!state.isEmpty) {
+        newState = state.substring(0, state.length - 1);
+      }
+      LocalStorage.prefs.setString(LocalKeys.userDataEntry, newState);
+      return newState;
+    },
+  );
+
+  // ref.read(userDataPreviewResultProvider.notifier).update(
+  //   (state) {
+  //     LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, '');
+  //     return '';
+  //   },
+  // );
+}
+
+void manejadorPuntoDecimal(String? title, WidgetRef ref) {
+  ref.read(userDataEntryProvider.notifier).update(
+    (state) {
+      String newState = '$state';
+      if (!state.contains('.')) {
+        // sino contiene un punto decimal
+        // entonces se lo colocamos
+        newState += '.';
+      }
+
+      LocalStorage.prefs.setString(LocalKeys.userDataEntry, newState);
+      return newState;
+    },
+  );
+
+  // ref.read(userDataPreviewResultProvider.notifier).update(
+  //   (state) {
+  //     LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, '');
+  //     return '';
+  //   },
+  // );
 }
 
 void manejadorIndiceShape(String? title, WidgetRef ref) {
