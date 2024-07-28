@@ -51,7 +51,7 @@ const _botonesTitle = <Widget>[
   Boton(onPressed: manejadorDeCeros, title: '0'),
   Boton(onPressed: manejadorPuntoDecimal, title: '.'),
   Boton(
-    onPressed: manejadorDeNumeros,
+    onPressed: manejadorIgual,
     title: '=',
     titleColor: Colors.white,
   ),
@@ -233,6 +233,59 @@ void clearButton(String? title, WidgetRef ref) {
       return '';
     },
   );
+}
+
+void manejadorIgual(String? title, WidgetRef ref) {
+  // debe borrar userDataEntry
+  // y UserDataPreviewResult
+  // y los dos de ab
+
+  final userDataEntry = ref.read(userDataEntryProvider);
+  if (!contieneOperadorMatematico(userDataEntry)) return;
+  // no haces nada, lo dejas así
+
+  final userDataPreviewResult = ref.read(userDataPreviewResultProvider);
+  // en éste nivel me está diciendo que tiene al menos un operador matemático
+  if (userDataPreviewResult.isEmpty) {
+    // quiere decir que hay un error de syntaxis
+    ref.read(userDataPreviewResultProvider.notifier).update(
+      (state) {
+        LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, 'Error');
+        return 'Error';
+      },
+    );
+    return;
+  }
+  if (userDataPreviewResult.contains('Error')) return; // no hagas nada
+  if (userDataPreviewResult.contains('Infinity')) return; // no hagas nada
+  // ya el usuario está avisado que hay un error
+
+  // si llega a quí me parece que puede actualizar y hacer swap
+  //
+
+  ref.read(userDataEntryProvider.notifier).update(
+    (state) {
+      // maneja los decimales
+      String userDataPreviewResultAux =
+          Tools.redondeaDecimalesFromTxt(userDataPreviewResult, 2);
+      // me gustaría formatear en caso que haya decimales que sean 0
+      userDataPreviewResultAux =
+          Tools.eliminaDecimalCeroFromTxt(userDataPreviewResultAux);
+
+      LocalStorage.prefs
+          .setString(LocalKeys.userDataEntry, userDataPreviewResultAux);
+      return userDataPreviewResultAux;
+    },
+  );
+
+  ref.read(userDataPreviewResultProvider.notifier).update(
+    (state) {
+      LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, '');
+      return '';
+    },
+  );
+
+// no necesariamente es así
 }
 
 void removeLastChar(String? title, WidgetRef ref) {
