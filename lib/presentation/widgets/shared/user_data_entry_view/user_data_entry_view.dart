@@ -68,7 +68,7 @@ class _UserDataEntryViewState extends ConsumerState<UserDataEntryView> {
                 userDataPreviewResult.contains('Infinity')
             ? ''
             : userDataEntrySymbol;
-    // éste valor puede ser dolares ó la moneda local
+    // éste valor puede ser dólares ó la moneda local
     // depende de cuál sea, se hacen unos cálculos
     // en la otra página ó vista
     autoScroll();

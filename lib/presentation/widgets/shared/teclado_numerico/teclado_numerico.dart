@@ -50,11 +50,7 @@ const _botonesTitle = <Widget>[
   Boton(onPressed: manejadorDeCeros, title: '00'),
   Boton(onPressed: manejadorDeCeros, title: '0'),
   Boton(onPressed: manejadorPuntoDecimal, title: '.'),
-  Boton(
-    onPressed: manejadorIgual,
-    title: '=',
-    titleColor: Colors.white,
-  ),
+  Boton(onPressed: manejadorIgual, title: '='),
 ];
 
 class TecladoNumerico extends ConsumerStatefulWidget {
