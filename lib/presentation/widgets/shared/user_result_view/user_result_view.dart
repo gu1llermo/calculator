@@ -46,12 +46,13 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
     // éstso valores dependen de cuál moneda tiene el ususario de entrada
     final userDataEntry = ref.watch(userDataEntryProvider);
     final userDataEntrySymbol = ref.watch(userDataEntrySymbolProvider);
+    final tasaGeneral = ref.watch(tasaGeneralProvider);
 
     final symbolMonedaLocal =
         ref.watch(symbolMonedaLocalProvider); // aquí la moneda local
     // es fija, pero igual lo hago así para que sea flexible el código a futuro
 
-    String result =
+    String resultTxt =
         userDataEntry.isNotEmpty ? Tools.calculate(userDataEntry) : '';
     // Infinity : cuando se divide por 0
     // RangeError cuando no está completamente bien armada la expresión
@@ -61,10 +62,30 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
     // FormatException no debería aparecer, pero aparece cuando permites
     // armar mal una expresión
 
-    String data1Txt = 'Parte Entera Dollar';
-    String data2Txt = 'Restante en Moneda Local';
     // aquí siempre es la moneda base, en éstos casos es el dólar
     // y lo estoy dejando fijo para simplificar
+
+    String parteEnteraDollarTxt = ''; // 'Parte Entera Dollar';
+    String restanteEnMonedaLocalTxt = ''; //'Restante en Moneda Local';
+
+    try {
+      double resultValue = double.parse(resultTxt);
+      // si no es un número para convertir que se salga
+      double valorRef;
+      if (userDataEntrySymbol == symbolMonedaLocal) {
+        valorRef = resultValue / tasaGeneral;
+      } else {
+        valorRef = resultValue;
+      }
+
+      double parteDecimal = valorRef % 1;
+      double parteEntera = valorRef - parteDecimal;
+      parteEnteraDollarTxt = parteEntera.toStringAsFixed(0);
+      double restanteMonedaLocal = parteDecimal * tasaGeneral;
+      restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(0);
+    } catch (e) {
+      // no hago nada, lo dejo así
+    }
 
     autoScroll();
 
@@ -72,11 +93,11 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
       child: DataWidgetView(
         crossAxisAlignment: CrossAxisAlignment.start,
         data1: DataWidget(
-          txt: '$monedaBase $data1Txt',
+          txt: '$monedaBase $parteEnteraDollarTxt',
           scrollController: _data1ScrollController,
         ),
         data2: DataWidget(
-          txt: '$symbolMonedaLocal $data2Txt',
+          txt: '+$symbolMonedaLocal $restanteEnMonedaLocalTxt',
           scrollController: _data2ScrollController,
         ),
       ),

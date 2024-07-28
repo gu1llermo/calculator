@@ -3,6 +3,11 @@ import 'package:calculator_app/presentation/widgets/shared/landscape/landscape_v
 import 'package:calculator_app/presentation/widgets/shared/portrait/portrait_view.dart';
 import 'package:flutter/material.dart';
 
+const iconStar = Icon(
+  Icons.star,
+  color: Colors.amber,
+);
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -45,7 +50,18 @@ class HomeView extends StatelessWidget {
                 AppBar(
                   centerTitle: true,
                   backgroundColor: Colors.transparent,
-                  title: const Text('Calculator'),
+                  title: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                    ],
+                  ),
                 ),
                 Expanded(
                     child: isPortrait

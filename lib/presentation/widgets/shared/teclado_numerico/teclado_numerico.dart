@@ -6,25 +6,22 @@ import 'package:calculator_app/services/local_storage/local_keys.dart';
 import 'package:calculator_app/services/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_expressions/math_expressions.dart';
+
+const indiceShapeIcon = Icon(
+  Icons.shape_line,
+  color: Colors.yellow,
+);
+
+const removeLastCharIcon = Icon(
+  Icons.backspace_outlined,
+  color: Colors.white,
+);
 
 const _botonesTitle = <Widget>[
   // 1era Fila
   Boton(onPressed: clearButton, title: 'C'),
-  Boton(
-    onPressed: manejadorIndiceShape,
-    icon: Icon(
-      Icons.shape_line,
-      color: Colors.yellow,
-    ),
-  ),
-  Boton(
-    onPressed: removeLastChar,
-    icon: Icon(
-      Icons.backspace_outlined,
-      color: Colors.white,
-    ),
-  ),
+  Boton(onPressed: manejadorIndiceShape, icon: indiceShapeIcon),
+  Boton(onPressed: removeLastChar, icon: removeLastCharIcon),
   Boton(onPressed: manejadorDeNumeros, title: '/'),
   //
   // 2da Fila
@@ -46,7 +43,6 @@ const _botonesTitle = <Widget>[
   Boton(onPressed: manejadorDeNumeros, title: '+'),
   //
   // 5ta Fila
-
   Boton(onPressed: manejadorDeCeros, title: '00'),
   Boton(onPressed: manejadorDeCeros, title: '0'),
   Boton(onPressed: manejadorPuntoDecimal, title: '.'),
@@ -66,11 +62,8 @@ class _TecladoNumericoState extends ConsumerState<TecladoNumerico> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // print('Constraints -> $constraints');
         final maxHeight = constraints.maxHeight;
         final double mainAxisExtent = maxHeight * 0.2;
-        // print('mainAxisExtent -> $mainAxisExtent');
-
         return GridView.builder(
           padding: const EdgeInsets.only(top: 0),
           itemCount: _botonesTitle.length,
@@ -134,7 +127,6 @@ void manejadorDeNumeros(String? title, WidgetRef ref) {
     (state) {
       LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, result);
       return result;
-      // return Tools.eliminaDecimalCeroFromTxt(result);
     },
   );
 }
@@ -187,31 +179,6 @@ bool contieneOperadorMatematico(String userDataEntry) {
 
   return false;
 }
-
-// String calculate(String userInput) {
-//   // Infinity : cuando se divide por 0
-//   // RangeError cuando no está completamente bien armada la expresión
-//   // por ejemplo escriben 5+ y quieren un resultado
-//   // ó escriben 5+*-+*/ cosas así
-
-//   // FormatException no debería aparecer, pero aparece cuando permites
-//   // armar mal una expresión
-
-//   try {
-//     final expression = Parser().parse(userInput);
-//     final evaluation = expression.evaluate(EvaluationType.REAL, ContextModel());
-//     print('evaluation= $evaluation');
-//     return evaluation.toString();
-//   } on RangeError {
-//     return 'RangeError';
-//   } catch (e) {
-//     // print('e -> $e');
-//     // e -> RangeError (index): Invalid value: Valid value range is empty: -1
-//     // es por faltan argumentos, por ejemplo 1+ y le damos enter
-//     return e
-//         .toString(); // no debería llegar aquí nunca, porque tengo que controlar bien las entradas
-//   }
-// }
 
 void clearButton(String? title, WidgetRef ref) {
   // debe borrar userDataEntry
@@ -326,13 +293,6 @@ void manejadorPuntoDecimal(String? title, WidgetRef ref) {
       return newState;
     },
   );
-
-  // ref.read(userDataPreviewResultProvider.notifier).update(
-  //   (state) {
-  //     LocalStorage.prefs.setString(LocalKeys.userDataPreviewResult, '');
-  //     return '';
-  //   },
-  // );
 }
 
 void manejadorIndiceShape(String? title, WidgetRef ref) {
