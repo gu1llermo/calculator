@@ -60,7 +60,7 @@ class Tools {
       final expression = Parser().parse(userInput);
       final evaluation =
           expression.evaluate(EvaluationType.REAL, ContextModel());
-      print('evaluation= $evaluation');
+      // print('evaluation= $evaluation');
       return evaluation.toString();
     } on RangeError {
       return 'RangeError';

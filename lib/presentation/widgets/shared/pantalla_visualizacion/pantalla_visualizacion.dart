@@ -11,7 +11,7 @@ class PantallaVisualizacion extends StatelessWidget {
       child: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          width: double.infinity,
+          width: double.infinity, // iba double.infinity
           decoration: BoxDecoration(
               color: Colors.black12, borderRadius: BorderRadius.circular(20)),
           child: child,

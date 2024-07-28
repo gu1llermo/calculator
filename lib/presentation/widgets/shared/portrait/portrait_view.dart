@@ -32,3 +32,24 @@ class PortraitView extends ConsumerWidget {
     );
   }
 }
+
+
+// return Padding(
+//       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+//       child: Column(
+//         children: [
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               const TasaButton(),
+//               toggleButton(ref)
+//               // aquí podría colocar otros botones
+//               // como el del historial
+//             ],
+//           ),
+//           const Flexible(flex: 1, child: UserDataEntryView()),
+//           const Flexible(flex: 1, child: UserResultView()),
+//           const Flexible(flex: 3, child: TecladoNumerico()),
+//         ],
+//       ),
+//     );

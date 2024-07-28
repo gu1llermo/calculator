@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 const iconStar = Icon(
   Icons.star,
-  color: Colors.amber,
+  color: Colors.white,
 );
 
 class HomeScreen extends StatelessWidget {
@@ -51,7 +51,7 @@ class HomeView extends StatelessWidget {
                   centerTitle: true,
                   backgroundColor: Colors.transparent,
                   title: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       iconStar,
                       iconStar,
