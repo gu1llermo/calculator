@@ -27,6 +27,7 @@ IconButton toggleButton(WidgetRef ref) {
       icon: const Icon(
         Icons.change_circle_outlined,
         size: 30,
-        color: Color.fromARGB(255, 8, 109, 8),
+        color: Colors.white,
+        fill: 0.5,
       ));
 }

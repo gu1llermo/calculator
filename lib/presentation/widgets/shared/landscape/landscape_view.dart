@@ -18,6 +18,7 @@ class LandscapeView extends ConsumerWidget {
           Flexible(
             flex: 1,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
