@@ -12,7 +12,7 @@ IconButton toggleButton(WidgetRef ref) {
         final String userDataEntrySymbol =
             ref.read(userDataEntrySymbolProvider);
 
-        String symbolToggle = '\$';
+        String symbolToggle = '$monedaBase';
 
         if (userDataEntrySymbol == monedaBase) {
           // la moneda base es el dolar en estos casos

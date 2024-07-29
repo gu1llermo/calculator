@@ -72,6 +72,7 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
       double resultValue = double.parse(resultTxt);
       // si no es un número para convertir que se salga
       double valorRef;
+      // final String symbol = ref.read(userDataEntrySymbolProvider);
       if (userDataEntrySymbol == symbolMonedaLocal) {
         valorRef = resultValue / tasaGeneral;
       } else {
