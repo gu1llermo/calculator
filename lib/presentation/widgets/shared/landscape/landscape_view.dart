@@ -18,27 +18,29 @@ class LandscapeView extends ConsumerWidget {
         children: [
           Flexible(
             flex: 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TasaButton(),
-                    Row(
-                      children: [
-                        HistoryButton(heightFactor: 0.7),
-                        ToggleButton(),
-                      ],
-                    ),
-                    // toggleButton(ref)
-                    // aquí podría colocar otros botones
-                    // como el del historial
-                  ],
-                ),
-                UserDataEntryView(),
-                UserResultView(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TasaButton(),
+                      Row(
+                        children: [
+                          HistoryButton(heightFactor: 0.7),
+                          ToggleButton(),
+                        ],
+                      ),
+                      // toggleButton(ref)
+                      // aquí podría colocar otros botones
+                      // como el del historial
+                    ],
+                  ),
+                  UserDataEntryView(),
+                  UserResultView(),
+                ],
+              ),
             ),
           ),
           Flexible(flex: 1, child: TecladoNumerico()),
