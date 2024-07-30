@@ -1,4 +1,5 @@
 import 'package:calculator_app/presentation/widgets/calc/tasa_button.dart';
+import 'package:calculator_app/presentation/widgets/shared/history_button/history_button.dart';
 import 'package:calculator_app/presentation/widgets/shared/teclado_numerico/teclado_numerico.dart';
 import 'package:calculator_app/presentation/widgets/shared/toggle_button/toggle_button_class.dart';
 import 'package:calculator_app/presentation/widgets/shared/user_data_entry_view/user_data_entry_view.dart';
@@ -24,7 +25,12 @@ class LandscapeView extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TasaButton(),
-                    ToggleButton(),
+                    Row(
+                      children: [
+                        HistoryButton(heightFactor: 0.7),
+                        ToggleButton(),
+                      ],
+                    ),
                     // toggleButton(ref)
                     // aquí podría colocar otros botones
                     // como el del historial

@@ -22,3 +22,23 @@ final userDataEntryProvider = StateProvider<String>(
 
 final userDataPreviewResultProvider = StateProvider<String>((ref) =>
     LocalStorage.prefs.getString(LocalKeys.userDataPreviewResult) ?? '');
+
+final historialProvider =
+    NotifierProvider<HistorialNotifier, List<String>>(HistorialNotifier.new);
+
+class HistorialNotifier extends Notifier<List<String>> {
+  @override
+  build() => LocalStorage.prefs.getStringList(LocalKeys.historial) ?? [];
+
+  void add(String title, String subtitle) {
+    final String txt = '$title $subtitle';
+
+    state = [txt, ...state];
+    LocalStorage.prefs.setStringList(LocalKeys.historial, state);
+  }
+
+  void clear() {
+    state = [];
+    LocalStorage.prefs.setStringList(LocalKeys.historial, state);
+  }
+}

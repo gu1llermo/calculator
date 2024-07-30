@@ -226,7 +226,7 @@ void manejadorIgual(String? title, WidgetRef ref) {
   // si llega a quí me parece que puede actualizar y hacer swap
   //
 
-  ref.read(userDataEntryProvider.notifier).update(
+  final String subtitle = ref.read(userDataEntryProvider.notifier).update(
     (state) {
       // maneja los decimales
       String userDataPreviewResultAux =
@@ -247,6 +247,8 @@ void manejadorIgual(String? title, WidgetRef ref) {
       return '';
     },
   );
+  // agrega al historial
+  ref.read(historialProvider.notifier).add(userDataEntry, subtitle);
 
 // no necesariamente es así
 }
