@@ -285,8 +285,8 @@ void manejadorPuntoDecimal(String? title, WidgetRef ref) {
   ref.read(userDataEntryProvider.notifier).update(
     (state) {
       String newState = '$state';
-      if (!state.contains('.')) {
-        // sino contiene un punto decimal
+
+      if (sePuedeColocarDecimal(state)) {
         // entonces se lo colocamos
         newState += '.';
       }
@@ -296,6 +296,19 @@ void manejadorPuntoDecimal(String? title, WidgetRef ref) {
     },
   );
 }
+
+// tengo que implementar uná función que dado un string me valide, si
+bool sePuedeColocarDecimal(String data) {
+  final vector =
+      data.codeUnits.reversed.map((nro) => String.fromCharCode(nro)).toList();
+  for (var caracter in vector) {
+    if (contieneOperadorMatematico(caracter)) return true;
+    if (caracter.contains('.')) return false;
+  }
+  return true;
+}
+
+// 2.5+65.
 
 void manejadorIndiceShape(String? title, WidgetRef ref) {
   // lo que hace es cambiar el índice shape
