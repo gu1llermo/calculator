@@ -2,7 +2,7 @@ import 'package:calculator_app/presentation/widgets/shared/landscape/landscape_v
 import 'package:calculator_app/presentation/widgets/shared/portrait/portrait_view.dart';
 import 'package:flutter/material.dart';
 
-final iconStar = Icon(
+const iconStar = Icon(
   Icons.star,
   color: Colors.yellow,
 );
