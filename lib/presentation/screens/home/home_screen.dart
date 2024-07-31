@@ -1,11 +1,10 @@
-import 'package:calculator_app/config/helpers/backgrounds.dart';
 import 'package:calculator_app/presentation/widgets/shared/landscape/landscape_view.dart';
 import 'package:calculator_app/presentation/widgets/shared/portrait/portrait_view.dart';
 import 'package:flutter/material.dart';
 
 final iconStar = Icon(
   Icons.star,
-  color: Colors.white.withOpacity(.2),
+  color: Colors.yellow,
 );
 
 class HomeScreen extends StatelessWidget {
@@ -58,8 +57,9 @@ class HomeView extends StatelessWidget {
                       iconStar,
                       iconStar,
                       iconStar,
-                      iconStar,
-                      iconStar,
+                      // iconStar,
+                      // iconStar,
+                      // iconStar,
                     ],
                   ),
                 ),
@@ -119,7 +119,7 @@ class _GradientBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Container(
-        decoration: const BoxDecoration(color: Colors.black26),
+        decoration: BoxDecoration(color: Colors.blue.withOpacity(0.1)),
         //decoration: const BoxDecoration(gradient: primaryGradient),
       ),
     );
