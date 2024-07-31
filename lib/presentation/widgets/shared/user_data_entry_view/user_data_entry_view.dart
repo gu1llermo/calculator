@@ -84,7 +84,7 @@ class _UserDataEntryViewState extends ConsumerState<UserDataEntryView> {
           txt: '$userDataPreviewResultAux $symbol2',
           scrollController: _userDataPreviewResultScrollController,
           color: Colors.white.withOpacity(.7),
-          fontSize: 35,
+          fontSize: 30,
         ),
       ),
     );

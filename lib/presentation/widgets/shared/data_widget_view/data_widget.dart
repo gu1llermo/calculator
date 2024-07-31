@@ -6,7 +6,7 @@ class DataWidget extends ConsumerWidget {
     required this.txt,
     required this.scrollController,
     this.color = Colors.white,
-    this.fontSize = 35,
+    this.fontSize = 32,
     super.key,
   });
   final String txt;

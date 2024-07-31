@@ -47,26 +47,26 @@ class HomeView extends StatelessWidget {
             width: width,
             child: Column(
               children: [
-                // AppBar(
-                //   centerTitle: true,
-                //   backgroundColor: Colors.transparent,
-                //   title: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //     children: [
-                //       iconStar,
-                //       iconStar,
-                //       iconStar,
-                //       iconStar,
-                //       iconStar,
-                //       iconStar,
-                //       iconStar,
-                //     ],
-                //   ),
-                // ),
-                Container(
-                  height: 80,
-                  color: Colors.red,
+                AppBar(
+                  centerTitle: true,
+                  backgroundColor: Colors.transparent,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                      iconStar,
+                    ],
+                  ),
                 ),
+                // Container(
+                //   height: 40,
+                //   color: Colors.red,
+                // ),
                 Expanded(
                     child: isPortrait
                         ? const PortraitView()
