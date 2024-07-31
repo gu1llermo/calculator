@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 const Icon iconHistory = Icon(
   Icons.history_rounded,
-  color: Colors.white,
+  //color: Colors.white,
   size: 30,
 );
 

@@ -6,7 +6,7 @@ class DataWidget extends ConsumerWidget {
     required this.txt,
     required this.scrollController,
     this.color = Colors.white,
-    this.fontSize = 38,
+    this.fontSize = 35,
     super.key,
   });
   final String txt;
@@ -17,7 +17,7 @@ class DataWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textStyle = TextStyle(
-      color: color,
+      //color: color,
       fontSize: fontSize,
     );
 

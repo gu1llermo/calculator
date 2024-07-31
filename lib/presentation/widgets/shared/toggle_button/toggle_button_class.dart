@@ -37,7 +37,7 @@ class ToggleButton extends ConsumerWidget {
       child: Text(
         symbol,
         style: const TextStyle(
-          color: Colors.white,
+          //color: Colors.white,
           fontSize: 24,
           // decoration: TextDecoration.underline,
         ),

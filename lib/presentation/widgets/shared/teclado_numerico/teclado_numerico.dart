@@ -14,7 +14,7 @@ const indiceShapeIcon = Icon(
 
 const removeLastCharIcon = Icon(
   Icons.backspace_outlined,
-  color: Colors.white,
+  //color: Colors.white,
 );
 
 const _botonesTitle = <Widget>[
@@ -297,7 +297,7 @@ void manejadorPuntoDecimal(String? title, WidgetRef ref) {
   );
 }
 
-// tengo que implementar uná función que dado un string me valide, si
+// tengo que implementar una función que dado un string me valide, si
 bool sePuedeColocarDecimal(String data) {
   final vector =
       data.codeUnits.reversed.map((nro) => String.fromCharCode(nro)).toList();

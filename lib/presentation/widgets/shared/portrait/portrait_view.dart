@@ -15,6 +15,7 @@ class PortraitView extends ConsumerWidget {
     return const Padding(
       padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,7 +36,7 @@ class PortraitView extends ConsumerWidget {
           ),
           Flexible(flex: 1, child: UserDataEntryView()),
           Flexible(flex: 1, child: UserResultView()),
-          Flexible(flex: 3, child: TecladoNumerico()),
+          Flexible(flex: 4, child: TecladoNumerico()),
         ],
       ),
     );

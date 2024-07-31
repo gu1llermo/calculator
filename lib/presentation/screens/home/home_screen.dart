@@ -3,9 +3,9 @@ import 'package:calculator_app/presentation/widgets/shared/landscape/landscape_v
 import 'package:calculator_app/presentation/widgets/shared/portrait/portrait_view.dart';
 import 'package:flutter/material.dart';
 
-const iconStar = Icon(
+final iconStar = Icon(
   Icons.star,
-  color: Colors.white,
+  color: Colors.white.withOpacity(.2),
 );
 
 class HomeScreen extends StatelessWidget {
@@ -39,7 +39,7 @@ class HomeView extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Stack(
-        // alignment: Alignment.topCenter,
+        // alignment: Alignment.bottomCenter,
         children: [
           const _GradientBackground(),
           SizedBox(
@@ -47,21 +47,25 @@ class HomeView extends StatelessWidget {
             width: width,
             child: Column(
               children: [
-                AppBar(
-                  centerTitle: true,
-                  backgroundColor: Colors.transparent,
-                  title: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      iconStar,
-                      iconStar,
-                      iconStar,
-                      iconStar,
-                      iconStar,
-                      iconStar,
-                      iconStar,
-                    ],
-                  ),
+                // AppBar(
+                //   centerTitle: true,
+                //   backgroundColor: Colors.transparent,
+                //   title: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: [
+                //       iconStar,
+                //       iconStar,
+                //       iconStar,
+                //       iconStar,
+                //       iconStar,
+                //       iconStar,
+                //       iconStar,
+                //     ],
+                //   ),
+                // ),
+                Container(
+                  height: 80,
+                  color: Colors.red,
                 ),
                 Expanded(
                     child: isPortrait
@@ -70,7 +74,39 @@ class HomeView extends StatelessWidget {
               ],
             ),
           ),
+          //Estrellas(height: height, width: width)
         ],
+      ),
+    );
+  }
+}
+
+class Estrellas extends StatelessWidget {
+  const Estrellas({super.key, required this.height, required this.width});
+  final double height;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: height / 3,
+        ),
+        getStars(60),
+        getStars(150),
+        getStars(240),
+        getStars(330),
+      ],
+    );
+  }
+
+  SizedBox getStars(double width) {
+    return SizedBox(
+      width: width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [iconStar, iconStar],
       ),
     );
   }
@@ -83,7 +119,8 @@ class _GradientBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Container(
-        decoration: const BoxDecoration(gradient: primaryGradient),
+        decoration: const BoxDecoration(color: Colors.black26),
+        //decoration: const BoxDecoration(gradient: primaryGradient),
       ),
     );
   }

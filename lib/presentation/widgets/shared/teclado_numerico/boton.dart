@@ -32,8 +32,10 @@ class Boton extends ConsumerWidget {
     final bool isDefaultWidget = !isIcon &&
         !isTitle; // si no hay ni ícono ni title entonces le colocamos un defaultWidget
 
-    final textStyle =
-        TextStyle(color: titleColor ?? Colors.white, fontSize: 22);
+    const textStyle = TextStyle(
+      // color: titleColor ?? Colors.white,
+      fontSize: 22,
+    );
     final Widget defaultWidget = Text('X', style: textStyle);
     final Widget child = isDefaultWidget
         ? defaultWidget

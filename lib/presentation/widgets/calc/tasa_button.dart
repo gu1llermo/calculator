@@ -41,7 +41,7 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
   Widget build(BuildContext context) {
     final fontSizeLabel = Theme.of(context).textTheme.bodyLarge?.fontSize;
     final labelTextStyle = TextStyle(
-        color: Colors.white,
+        // color: Colors.white,
         fontSize: fontSizeLabel,
         fontWeight: FontWeight.bold);
     final symbolMonedaLocal = ref.watch(symbolMonedaLocalProvider);
