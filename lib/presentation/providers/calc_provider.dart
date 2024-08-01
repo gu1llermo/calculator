@@ -9,13 +9,13 @@ final tasaGeneralProvider = StateProvider<double>((ref) =>
     tasaGeneralInitValue);
 
 final indiceShapeProvider = StateProvider<int>(
-    (ref) => LocalStorage.prefs.getInt(LocalKeys.indiceShape) ?? 0);
+    (ref) => LocalStorage.prefs.getInt(LocalKeys.indiceShape) ?? 1);
 
 final symbolMonedaLocalProvider = StateProvider<String>(
     (ref) => LocalStorage.prefs.getString(LocalKeys.symbolMonedaLocal) ?? 'Bs');
 
 final userDataEntrySymbolProvider = StateProvider<String>((ref) =>
-    LocalStorage.prefs.getString(LocalKeys.userDataEntrySymbol) ?? '\$');
+    LocalStorage.prefs.getString(LocalKeys.userDataEntrySymbol) ?? 'Bs');
 
 final userDataEntryProvider = StateProvider<String>(
     (ref) => LocalStorage.prefs.getString(LocalKeys.userDataEntry) ?? '');
