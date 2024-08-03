@@ -1,4 +1,4 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+
 
 import 'package:calculator_app/presentation/widgets/shared/landscape/landscape_view.dart';
 import 'package:calculator_app/presentation/widgets/shared/portrait/portrait_view.dart';
@@ -48,12 +48,7 @@ class _HomeViewState extends State<HomeView> {
     loadBannerAd();
   }
 
-  Future<bool> hasConnection() async {
-    final List<ConnectivityResult> connectivityResult =
-        await (Connectivity().checkConnectivity());
-    if (!connectivityResult.contains(ConnectivityResult.none)) return true;
-    return false;
-  }
+  
 
   /// Loads a banner ad.
   void loadBannerAd() {
