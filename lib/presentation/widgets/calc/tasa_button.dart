@@ -5,6 +5,7 @@ import 'package:calculator_app/services/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class TasaButton extends ConsumerStatefulWidget {
   const TasaButton({super.key, this.width = 200.0});
@@ -21,6 +22,12 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
   late FocusNode _focusNode;
   late TextEditingController _tasaEditController;
 
+  RewardedAd? _rewardedAd;
+  bool _isUserEarnedReward = false;
+  // TODO: replace this test ad unit with your own ad unit.
+  final adRewardUnitId = 'ca-app-pub-3940256099942544/5224354917'; // Test
+  bool _isRewardedAd = false;
+
   @override
   void initState() {
     super.initState();
@@ -28,13 +35,53 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
     final tasaGeneral = ref.read(tasaGeneralProvider);
     final tasaGeneralTxt = Tools.eliminaDecimalCero(tasaGeneral);
     _tasaEditController = TextEditingController(text: tasaGeneralTxt);
+    loadRewardAd();
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
     _tasaEditController.dispose();
+    _rewardedAd?.dispose();
     super.dispose();
+  }
+
+  /// Loads a rewarded ad.
+  void loadRewardAd() {
+    RewardedAd.load(
+        adUnitId: adRewardUnitId,
+        request: const AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            _rewardedAd = ad;
+            _isRewardedAd = true;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('RewardedAd failed to load: $error');
+            _isRewardedAd = false;
+          },
+        ));
+  }
+
+  void showRewardAd() {
+    debugPrint('_isRewardedAd $_isRewardedAd');
+    if (_isRewardedAd) {
+      _rewardedAd?.show(
+          onUserEarnedReward: (AdWithoutView ad, RewardItem rewardItem) {
+        // Reward the user for watching an ad.
+        // la recompensa es que use la app
+        debugPrint('onUserEarnedReward!');
+        _isUserEarnedReward = true;
+        _rewardedAd?.dispose();
+        loadRewardAd();
+      });
+    } else {
+      loadRewardAd();
+    }
   }
 
   @override
@@ -44,6 +91,7 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
         // color: Colors.white,
         fontSize: fontSizeLabel,
         fontWeight: FontWeight.bold);
+
     final symbolMonedaLocal = ref.watch(symbolMonedaLocalProvider);
 
     return TextField(
@@ -75,6 +123,8 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
         _focusNode.unfocus();
 
         _updateTasaGeneral(tasaGeneral);
+        // muestra anuncio
+        showRewardAd();
       },
       onSubmitted: (value) {
         if (value.isEmpty) {
@@ -94,6 +144,8 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
         // si llega hasta aquí es que no es vacío ni 0
         _tasaEditController.text = Tools.eliminaDecimalCero(tasaGeneral);
         _updateTasaGeneral(tasaGeneral);
+        // muetsra anuncio
+        showRewardAd();
       },
       decoration: InputDecoration(
         border: UnderlineInputBorder(borderRadius: BorderRadius.circular(20)),

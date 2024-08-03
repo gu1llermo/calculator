@@ -1,6 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+
 import 'package:calculator_app/presentation/widgets/shared/landscape/landscape_view.dart';
 import 'package:calculator_app/presentation/widgets/shared/portrait/portrait_view.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 const iconStar = Icon(
   Icons.star,
@@ -21,8 +24,80 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  BannerAd? _bannerAd;
+  bool _isBannerLoaded = false;
+
+  // TODO: replace this test ad unit with your own ad unit.
+
+  final adBannerUnitId =
+      'ca-app-pub-3940256099942544/6300978111'; // bannerTestId
+
+  @override
+  void initState() {
+    super.initState();
+    // Load ads.
+
+    loadBannerAd();
+  }
+
+  Future<bool> hasConnection() async {
+    final List<ConnectivityResult> connectivityResult =
+        await (Connectivity().checkConnectivity());
+    if (!connectivityResult.contains(ConnectivityResult.none)) return true;
+    return false;
+  }
+
+  /// Loads a banner ad.
+  void loadBannerAd() {
+    _bannerAd = BannerAd(
+      adUnitId: adBannerUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+          // cuando se usa el setState no me gusta porque
+          // setState(() {
+          //   debugPrint('SetState');
+          // });
+          // me parece que tiene que hacer el setState
+          // para que cambie el anuncio
+          // _isBannerLoaded = true;
+          // setState(() {
+          //   _isBannerLoaded = true;
+          // });
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('BannerAd failed to load: $err');
+          // _isBannerLoaded = false;
+          // setState(() {
+          //   _isBannerLoaded = false;
+          // });
+          // ad.dispose();
+        },
+        // onAdImpression: (Ad ad) {
+        //   debugPrint('Aqui dos');
+        // },
+      ),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,19 +124,7 @@ class HomeView extends StatelessWidget {
                 AppBar(
                   centerTitle: true,
                   backgroundColor: Colors.transparent,
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      iconStar,
-                      iconStar,
-                      iconStar,
-                      iconStar,
-                      iconStar,
-                      // iconStar,
-                      // iconStar,
-                      // iconStar,
-                    ],
-                  ),
+                  title: getBanner(),
                 ),
                 // Container(
                 //   height: 40,
@@ -78,6 +141,31 @@ class HomeView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget getBanner() {
+    print('getBanner() ok!');
+    return (_bannerAd == null)
+        ? const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              iconStar,
+              iconStar,
+              iconStar,
+              iconStar,
+              iconStar,
+              // iconStar,
+              // iconStar,
+              // iconStar,
+            ],
+          )
+        : SafeArea(
+            child: SizedBox(
+              width: _bannerAd!.size.width.toDouble(),
+              height: _bannerAd!.size.height.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            ),
+          );
   }
 }
 
@@ -104,7 +192,7 @@ class Estrellas extends StatelessWidget {
   SizedBox getStars(double width) {
     return SizedBox(
       width: width,
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [iconStar, iconStar],
       ),
