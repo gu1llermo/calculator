@@ -75,15 +75,23 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
       // final String symbol = ref.read(userDataEntrySymbolProvider);
       if (userDataEntrySymbol == symbolMonedaLocal) {
         valorRef = resultValue / tasaGeneral;
+
+        double parteDecimal = valorRef % 1;
+        double parteEntera = valorRef - parteDecimal;
+        parteEnteraDollarTxt = parteEntera.toStringAsFixed(0);
+        double restanteMonedaLocal = parteDecimal * tasaGeneral;
+        restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(0);
       } else {
         valorRef = resultValue;
-      }
 
-      double parteDecimal = valorRef % 1;
-      double parteEntera = valorRef - parteDecimal;
-      parteEnteraDollarTxt = parteEntera.toStringAsFixed(0);
-      double restanteMonedaLocal = parteDecimal * tasaGeneral;
-      restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(0);
+        //   double parteDecimal = valorRef % 1;
+        // double parteEntera = valorRef - parteDecimal;
+
+        // parteEnteraDollarTxt = parteEntera.toStringAsFixed(0);
+
+        double restanteMonedaLocal = resultValue * tasaGeneral;
+        restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(0);
+      }
     } catch (e) {
       // no hago nada, lo dejo así
     }
@@ -94,11 +102,14 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
       child: DataWidgetView(
         crossAxisAlignment: CrossAxisAlignment.start,
         data1: DataWidget(
-          txt: '$monedaBase $parteEnteraDollarTxt',
+          txt: (userDataEntrySymbol == symbolMonedaLocal)
+              ? '$monedaBase $parteEnteraDollarTxt'
+              : '',
           scrollController: _data1ScrollController,
         ),
         data2: DataWidget(
-          txt: '+$symbolMonedaLocal $restanteEnMonedaLocalTxt',
+          txt:
+              '${(userDataEntrySymbol == symbolMonedaLocal) ? '+' : ''}$symbolMonedaLocal $restanteEnMonedaLocalTxt',
           scrollController: _data2ScrollController,
         ),
       ),

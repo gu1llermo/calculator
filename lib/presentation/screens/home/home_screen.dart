@@ -1,5 +1,3 @@
-
-
 import 'package:calculator_app/presentation/widgets/shared/landscape/landscape_view.dart';
 import 'package:calculator_app/presentation/widgets/shared/portrait/portrait_view.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +46,6 @@ class _HomeViewState extends State<HomeView> {
     loadBannerAd();
   }
 
-  
-
   /// Loads a banner ad.
   void loadBannerAd() {
     _bannerAd = BannerAd(
@@ -59,7 +55,7 @@ class _HomeViewState extends State<HomeView> {
       listener: BannerAdListener(
         // Called when an ad is successfully received.
         onAdLoaded: (ad) {
-          debugPrint('$ad loaded.');
+          // debugPrint('$ad loaded.');
           // cuando se usa el setState no me gusta porque
           // setState(() {
           //   debugPrint('SetState');
@@ -73,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
         },
         // Called when an ad request failed.
         onAdFailedToLoad: (ad, err) {
-          debugPrint('BannerAd failed to load: $err');
+          // debugPrint('BannerAd failed to load: $err');
           // _isBannerLoaded = false;
           // setState(() {
           //   _isBannerLoaded = false;
@@ -139,7 +135,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget getBanner() {
-    print('getBanner() ok!');
+    // print('getBanner() ok!');
     return (_bannerAd == null)
         ? const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

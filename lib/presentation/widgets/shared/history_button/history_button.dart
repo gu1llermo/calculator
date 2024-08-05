@@ -46,14 +46,14 @@ class _HistoryButtonState extends ConsumerState<HistoryButton> {
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           // Called when an ad is successfully received.
           onAdLoaded: (ad) {
-            debugPrint('$ad loaded.');
+            // debugPrint('$ad loaded.');
             // Keep a reference to the ad so you can show it later.
             _rewardedAd = ad;
             _isRewardedAd = true;
           },
           // Called when an ad request failed.
           onAdFailedToLoad: (LoadAdError error) {
-            debugPrint('RewardedAd failed to load: $error');
+            // debugPrint('RewardedAd failed to load: $error');
             _isRewardedAd = false;
           },
         ));
@@ -66,7 +66,7 @@ class _HistoryButtonState extends ConsumerState<HistoryButton> {
           onUserEarnedReward: (AdWithoutView ad, RewardItem rewardItem) {
         // Reward the user for watching an ad.
         // la recompensa es que use la app
-        debugPrint('onUserEarnedReward!');
+        // debugPrint('onUserEarnedReward!');
         _isUserEarnedReward = true;
         _rewardedAd?.dispose();
         loadRewardAd();
