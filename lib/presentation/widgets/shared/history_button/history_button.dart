@@ -21,20 +21,21 @@ class HistoryButton extends ConsumerStatefulWidget {
 class _HistoryButtonState extends ConsumerState<HistoryButton> {
   RewardedAd? _rewardedAd;
   bool _isUserEarnedReward = false;
+
   // TODO: replace this test ad unit with your own ad unit.
   final adRewardUnitId = 'ca-app-pub-3940256099942544/5224354917'; // Test
+  // no lo voy a implementar, voy a dejar solo el banner
   bool _isRewardedAd = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    loadRewardAd();
+    //loadRewardAd();
   }
 
   @override
   void dispose() {
-    _rewardedAd?.dispose();
+    //_rewardedAd?.dispose();
     super.dispose();
   }
 
@@ -81,7 +82,7 @@ class _HistoryButtonState extends ConsumerState<HistoryButton> {
     return IconButton(
         onPressed: () {
           // muestra anuncio
-          showRewardAd();
+          //showRewardAd();
           displayHistorial(context, ref, widget.heightFactor);
         },
         icon: iconHistory);
