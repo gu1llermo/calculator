@@ -19,7 +19,7 @@ class PortraitView extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TasaButton(),
               Row(
