@@ -26,18 +26,18 @@ class EditButton extends ConsumerWidget {
         return AlertDialog(
           // title: const Text('Edit Symbols'),
           content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Flexible(
-                  flex: 1,
+                  flex: 4,
                   child: SelectSymbol(
                     helperText: 'MONEDA BASE',
                     symbolProvider: monedaBaseProvider,
                     localKey: LocalKeys.monedaBase,
                   )),
-              const SizedBox(width: 20),
+              const Flexible(flex: 1, child: SizedBox(width: 20)),
               Flexible(
-                  flex: 1,
+                  flex: 4,
                   child: SelectSymbol(
                     helperText: 'MONEDA LOCAL',
                     symbolProvider: symbolMonedaLocalProvider,
