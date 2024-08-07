@@ -11,6 +11,7 @@ IconButton toggleButton(WidgetRef ref) {
 
         final String userDataEntrySymbol =
             ref.read(userDataEntrySymbolProvider);
+        final monedaBase = ref.read(monedaBaseProvider);
 
         String symbolToggle = '$monedaBase';
 

@@ -48,6 +48,7 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
         fontWeight: FontWeight.bold);
 
     final symbolMonedaLocal = ref.watch(symbolMonedaLocalProvider);
+    final monedaBase = ref.watch(monedaBaseProvider);
 
     return TextField(
       style: labelTextStyle,

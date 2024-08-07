@@ -47,6 +47,7 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
     final userDataEntry = ref.watch(userDataEntryProvider);
     final userDataEntrySymbol = ref.watch(userDataEntrySymbolProvider);
     final tasaGeneral = ref.watch(tasaGeneralProvider);
+    final monedaBase = ref.watch(monedaBaseProvider);
 
     final symbolMonedaLocal =
         ref.watch(symbolMonedaLocalProvider); // aquí la moneda local
@@ -80,7 +81,8 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
         double parteEntera = valorRef - parteDecimal;
         parteEnteraDollarTxt = parteEntera.toStringAsFixed(0);
         double restanteMonedaLocal = parteDecimal * tasaGeneral;
-        restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(0);
+        restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(2);
+        // MONEDA LOCAL - MONEDA BASE
       } else {
         valorRef = resultValue;
 
@@ -90,7 +92,7 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
         // parteEnteraDollarTxt = parteEntera.toStringAsFixed(0);
 
         double restanteMonedaLocal = resultValue * tasaGeneral;
-        restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(0);
+        restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(2);
       }
     } catch (e) {
       // no hago nada, lo dejo así

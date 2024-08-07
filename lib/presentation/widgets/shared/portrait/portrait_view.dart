@@ -1,4 +1,5 @@
 import 'package:calculator_app/presentation/widgets/calc/tasa_button.dart';
+import 'package:calculator_app/presentation/widgets/shared/edit_button/edit_button.dart';
 import 'package:calculator_app/presentation/widgets/shared/history_button/history_button.dart';
 import 'package:calculator_app/presentation/widgets/shared/teclado_numerico/teclado_numerico.dart';
 import 'package:calculator_app/presentation/widgets/shared/toggle_button/toggle_button_class.dart';
@@ -23,6 +24,7 @@ class PortraitView extends ConsumerWidget {
               TasaButton(),
               Row(
                 children: [
+                  EditButton(),
                   HistoryButton(
                     heightFactor: 0.7,
                   ),
@@ -42,6 +44,8 @@ class PortraitView extends ConsumerWidget {
     );
   }
 }
+
+
 
 
 // return Padding(

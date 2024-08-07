@@ -19,7 +19,7 @@ class ToggleButton extends ConsumerWidget {
         final String symbolMonedaLocal = ref.read(symbolMonedaLocalProvider);
         final String userDataEntrySymbol =
             ref.read(userDataEntrySymbolProvider);
-
+        final monedaBase = ref.watch(monedaBaseProvider);
         String symbolToggle = '$monedaBase';
 
         if (userDataEntrySymbol == monedaBase) {
