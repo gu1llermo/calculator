@@ -19,17 +19,21 @@ class PortraitView extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              TasaButton(),
-              Row(
-                children: [
-                  EditButton(),
-                  HistoryButton(
-                    heightFactor: 0.7,
-                  ),
-                  ToggleButton(),
-                ],
+              Flexible(flex: 1, child: TasaButton()),
+              Flexible(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    EditButton(),
+                    HistoryButton(
+                      heightFactor: 0.7,
+                    ),
+                    ToggleButton(),
+                  ],
+                ),
               ),
               // toggleButton(ref)
               // aquí podría colocar otros botones

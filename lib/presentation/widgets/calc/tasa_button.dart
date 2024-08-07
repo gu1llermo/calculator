@@ -5,7 +5,6 @@ import 'package:calculator_app/services/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class TasaButton extends ConsumerStatefulWidget {
   const TasaButton({super.key, this.width = 200.0});
@@ -111,9 +110,9 @@ class _TasaButtonState extends ConsumerState<TasaButton> {
         suffixStyle: labelTextStyle,
         filled: true,
         fillColor: Colors.black26,
-        constraints: BoxConstraints.tightFor(
-          width: widget.width,
-        ),
+        // constraints: BoxConstraints.tightFor(
+        //   width: widget.width,
+        // ),
       ),
     );
   }
