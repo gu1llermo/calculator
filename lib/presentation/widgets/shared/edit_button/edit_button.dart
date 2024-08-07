@@ -24,26 +24,29 @@ class EditButton extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          // title: const Text('Edit Symbols'),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                  flex: 4,
+          title: const Text('Seleccione Moneda'),
+          content: SizedBox(
+            height: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Flexible(
                   child: SelectSymbol(
-                    helperText: 'MONEDA BASE',
+                    helperText: 'BASE',
                     symbolProvider: monedaBaseProvider,
                     localKey: LocalKeys.monedaBase,
-                  )),
-              const Flexible(flex: 1, child: SizedBox(width: 20)),
-              Flexible(
-                  flex: 4,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
                   child: SelectSymbol(
-                    helperText: 'MONEDA LOCAL',
+                    helperText: 'LOCAL',
                     symbolProvider: symbolMonedaLocalProvider,
                     localKey: LocalKeys.symbolMonedaLocal,
-                  )),
-            ],
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -68,6 +71,7 @@ class SelectSymbol extends ConsumerWidget {
     final textEditingController = TextEditingController(text: initialSymbol);
     final userDataEntrySymbol = ref.read(userDataEntrySymbolProvider);
     return DropdownMenu<String>(
+      expandedInsets: EdgeInsets.zero,
       dropdownMenuEntries: symbols
           .map((symbol) => DropdownMenuEntry<String>(
                 value: symbol,
@@ -78,7 +82,6 @@ class SelectSymbol extends ConsumerWidget {
       controller: textEditingController,
       onSelected: (value) {
         if (initialSymbol == userDataEntrySymbol) {
-          // entonces cambiamos al userDataEntrySymbol
           ref.read(userDataEntrySymbolProvider.notifier).update((state) {
             LocalStorage.prefs.setString(LocalKeys.userDataEntrySymbol, value!);
             return value;
