@@ -1,4 +1,5 @@
 import 'package:calculator_app/presentation/widgets/calc/tasa_button.dart';
+import 'package:calculator_app/presentation/widgets/shared/edit_button/edit_button.dart';
 import 'package:calculator_app/presentation/widgets/shared/history_button/history_button.dart';
 import 'package:calculator_app/presentation/widgets/shared/teclado_numerico/teclado_numerico.dart';
 import 'package:calculator_app/presentation/widgets/shared/toggle_button/toggle_button_class.dart';
@@ -13,7 +14,7 @@ class LandscapeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Padding(
-      padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      padding: EdgeInsets.only(left: 10, right: 0, bottom: 10),
       child: Row(
         children: [
           Flexible(
@@ -28,6 +29,7 @@ class LandscapeView extends ConsumerWidget {
                       TasaButton(),
                       Row(
                         children: [
+                          EditButton(),
                           HistoryButton(heightFactor: 0.7),
                           ToggleButton(),
                         ],

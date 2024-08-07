@@ -15,6 +15,8 @@ class ToggleButton extends ConsumerWidget {
     final String symbol = ref.watch(userDataEntrySymbolProvider);
 
     return TextButton(
+      style: ButtonStyle(
+          padding: WidgetStateProperty.all(const EdgeInsets.all(0))),
       onPressed: () {
         final String symbolMonedaLocal = ref.read(symbolMonedaLocalProvider);
         final String userDataEntrySymbol =

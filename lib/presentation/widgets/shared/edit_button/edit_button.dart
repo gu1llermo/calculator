@@ -45,26 +45,6 @@ class EditButton extends ConsumerWidget {
                   )),
             ],
           ),
-          // actions: [
-          //   TextButton(
-          //     style: TextButton.styleFrom(
-          //       textStyle: Theme.of(context).textTheme.labelLarge,
-          //     ),
-          //     child: const Text('Cancel'),
-          //     onPressed: () {
-          //       Navigator.of(context).pop();
-          //     },
-          //   ),
-          //   TextButton(
-          //     style: TextButton.styleFrom(
-          //       textStyle: Theme.of(context).textTheme.labelLarge,
-          //     ),
-          //     child: const Text('Ok'),
-          //     onPressed: () {
-          //       Navigator.of(context).pop();
-          //     },
-          //   ),
-          // ],
         );
       },
     );
