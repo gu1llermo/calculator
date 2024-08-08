@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:math';
 import 'package:calculator_app/config/helpers/tools.dart';
 import 'package:calculator_app/presentation/providers/calc_provider.dart';
 import 'package:calculator_app/presentation/widgets/shared/data_widget_view/data_widget.dart';
 import 'package:calculator_app/presentation/widgets/shared/data_widget_view/data_widget_view.dart';
 import 'package:calculator_app/presentation/widgets/shared/pantalla_visualizacion/pantalla_visualizacion.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class UserResultView extends ConsumerStatefulWidget {
   const UserResultView({super.key});
@@ -70,10 +72,9 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
     String restanteEnMonedaLocalTxt = ''; //'Restante en Moneda Local';
 
     try {
-      double resultValue = double.parse(resultTxt);
+      double resultValue = double.parse(resultTxt).abs();
       // si no es un número para convertir que se salga
       double valorRef;
-      // final String symbol = ref.read(userDataEntrySymbolProvider);
       if (userDataEntrySymbol == symbolMonedaLocal) {
         valorRef = resultValue / tasaGeneral;
 
@@ -81,18 +82,16 @@ class _UserResultViewState extends ConsumerState<UserResultView> {
         double parteEntera = valorRef - parteDecimal;
         parteEnteraDollarTxt = parteEntera.toStringAsFixed(0);
         double restanteMonedaLocal = parteDecimal * tasaGeneral;
+
         restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(2);
-        // MONEDA LOCAL - MONEDA BASE
+        restanteEnMonedaLocalTxt =
+            Tools.eliminaDecimalCeroFromTxt(restanteEnMonedaLocalTxt);
       } else {
         valorRef = resultValue;
-
-        //   double parteDecimal = valorRef % 1;
-        // double parteEntera = valorRef - parteDecimal;
-
-        // parteEnteraDollarTxt = parteEntera.toStringAsFixed(0);
-
         double restanteMonedaLocal = resultValue * tasaGeneral;
         restanteEnMonedaLocalTxt = restanteMonedaLocal.toStringAsFixed(2);
+        restanteEnMonedaLocalTxt =
+            Tools.eliminaDecimalCeroFromTxt(restanteEnMonedaLocalTxt);
       }
     } catch (e) {
       // no hago nada, lo dejo así

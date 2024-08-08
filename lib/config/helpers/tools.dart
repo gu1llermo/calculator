@@ -35,7 +35,7 @@ class Tools {
     if (!nroTxt.contains('.')) {
       return nroTxt; // si no contiene . entonces que finalice regresando su valor
     }
-    // pero si tiene punto enotnces vamos a formatearlo
+    // pero si tiene punto entonces vamos a formatearlo
     try {
       final nro = double.parse(nroTxt);
 

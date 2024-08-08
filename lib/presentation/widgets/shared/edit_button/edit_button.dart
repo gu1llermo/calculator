@@ -66,7 +66,7 @@ class SelectSymbol extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<String> symbols = ['\$', 'Bs', 'COP'];
+    List<String> symbols = ['\$', 'Bs', 'COP', 'CLP', 'EUR'];
     final initialSymbol = ref.read(symbolProvider);
     final textEditingController = TextEditingController(text: initialSymbol);
     final userDataEntrySymbol = ref.read(userDataEntrySymbolProvider);
