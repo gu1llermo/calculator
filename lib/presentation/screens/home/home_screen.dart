@@ -96,17 +96,13 @@ class _HomeViewState extends State<HomeView> {
     // lanscape es horizontal cuando se gira el celular
     final mediaQuery = MediaQuery.of(context);
 
-    // final orientation = mediaQuery.orientation;
     final height = mediaQuery.size.height;
     final width = mediaQuery.size.width;
     bool isPortrait = width < 600;
-    // bool isPortrait = orientation == Orientation.portrait;
 
     return SingleChildScrollView(
       child: Stack(
-        // alignment: Alignment.bottomCenter,
         children: [
-          const _GradientBackground(),
           SizedBox(
             height: height,
             width: width,
@@ -117,10 +113,6 @@ class _HomeViewState extends State<HomeView> {
                   backgroundColor: Colors.transparent,
                   title: getBanner(),
                 ),
-                // Container(
-                //   height: 40,
-                //   color: Colors.red,
-                // ),
                 Expanded(
                     child: isPortrait
                         ? const PortraitView()
@@ -128,14 +120,12 @@ class _HomeViewState extends State<HomeView> {
               ],
             ),
           ),
-          //Estrellas(height: height, width: width)
         ],
       ),
     );
   }
 
   Widget getBanner() {
-    // print('getBanner() ok!');
     return (_bannerAd == null)
         ? const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -145,9 +135,6 @@ class _HomeViewState extends State<HomeView> {
               iconStar,
               iconStar,
               iconStar,
-              // iconStar,
-              // iconStar,
-              // iconStar,
             ],
           )
         : SafeArea(
@@ -186,20 +173,6 @@ class Estrellas extends StatelessWidget {
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [iconStar, iconStar],
-      ),
-    );
-  }
-}
-
-class _GradientBackground extends StatelessWidget {
-  const _GradientBackground();
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: Container(
-        decoration: BoxDecoration(color: Colors.blue.withOpacity(0.1)),
-        //decoration: const BoxDecoration(gradient: primaryGradient),
       ),
     );
   }
